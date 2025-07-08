@@ -10,7 +10,7 @@ const TabIcon = ({ text, icon, focused }: any) => {
     return focused ? (
         <ImageBackground
             source={images.highlight}
-            className='flex flex-row min-w-[101px] min-h-[52px] justify-center items-center overflow-hidden rounded-full gap-1 mx-10 mt-4'
+            className='flex flex-row min-w-[101px] min-h-[53px] justify-center items-center overflow-hidden rounded-full gap-1 mx-10 mt-4'
         >
             <Image source={icon} tintColor="#151312" className='size-5 text-secondary' />
 
@@ -44,6 +44,8 @@ const _layout = () => {
                     marginHorizontal: 20,
                     marginBottom: 36,
                     height: 52,
+                    borderWidth: 1,
+                    borderColor: "#0f0d23",
                     position: "absolute",
                 }
 
