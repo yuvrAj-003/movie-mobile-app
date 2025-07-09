@@ -19,9 +19,8 @@ const TabIcon = ({ text, icon, focused }: any) => {
         </ImageBackground>
     ) : (
 
-        <View className='min-w-[20px] flex-col justify-center items-center mt-3'>
+        <View className='min-w-[20px] flex-col justify-center items-center mt-4'>
             <Image source={icon} className='size-5' tintColor={'#a8b5db'} />
-            {/* <Text className='text-[8px] opacity-50'>{text}</Text> */}
         </View>
     )
 }
