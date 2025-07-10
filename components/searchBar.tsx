@@ -16,7 +16,7 @@ const SearchBar = ({ onPress, onChange }: any) => {
 
             />
             <TextInput
-                style={{ color: "white", marginLeft: 5 }}
+                className='ml-3 text-white'
                 onPress={onPress}
                 value=""
                 onChange={onChange}
@@ -24,12 +24,6 @@ const SearchBar = ({ onPress, onChange }: any) => {
                 placeholderTextColor='#ab8bff'
 
             />
-
-
-
-
-
-
         </View>
     )
 }
