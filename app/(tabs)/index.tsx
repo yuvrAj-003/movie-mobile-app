@@ -35,9 +35,9 @@ export default function Index() {
         {/* movies data */}
         {movieLoading ?
           (<ActivityIndicator
-            size={5} />
+            size={5} className="mt-5" />
           ) : movieError ? (
-            <Text className="text-white mt-5 mb-5">Error : {movieError?.message}</Text>
+            <Text className="text-white font-bold mt-5 mb-5">Error : {movieError?.message}</Text>
           ) : (
             <View className="flex-1 mt-5">
               <SearchBar
@@ -47,6 +47,7 @@ export default function Index() {
 
               <Text className="text-white mt-5 font-bold mb-5"> Latest movies</Text>
 
+              {/* list rendered  */}
               <FlatList
                 data={movies}
                 renderItem={({ item }) => (
