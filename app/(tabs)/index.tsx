@@ -1,3 +1,4 @@
+import MovieCard from "@/components/movieCard";
 import SearchBar from "@/components/searchBar";
 import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";
@@ -51,10 +52,10 @@ export default function Index() {
               <FlatList
                 data={movies}
                 renderItem={({ item }) => (
-                  <Text className="text-white">{item.title}</Text>
+                  <MovieCard {...item} />
                 )}
                 keyExtractor={(item) => item.id.toString()}
-                numColumns={2}
+                numColumns={3}
                 scrollEnabled={false}
                 columnWrapperStyle={{
                   justifyContent: "flex-start",

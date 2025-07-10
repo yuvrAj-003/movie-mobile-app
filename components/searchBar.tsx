@@ -6,7 +6,7 @@ import { Image, TextInput, View } from 'react-native'
 const SearchBar = ({ onPress, onChange }: any) => {
 
     return (
-        <View className='bg-dark-200 flex-row items-center rounded-full px-5 py-5 '>
+        <View className='bg-dark-200 flex-row items-center rounded-full px-5 py-4 '>
 
             <Image
                 source={icons.search}
