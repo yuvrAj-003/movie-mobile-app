@@ -38,12 +38,16 @@ export default function Index() {
           (<ActivityIndicator
             size={5} className="mt-5" />
           ) : movieError ? (
-            <Text className="text-white font-bold mt-5 mb-5">Error : {movieError?.message}</Text>
+
+            <View className="h-screen absolute w-full flex-row justify-center items-center">
+              <Text className="text-gray-500 mt-5 mb-5 text-center">Error : {movieError?.message}</Text>
+            </View>
           ) : (
             <View className="flex-1 mt-5">
               <SearchBar
                 onPress={() => router.push("/search")}
-                onChange={() => router.push("/search")}
+                onChangeText={() => router.push("/search")}
+                value={''}
               />
 
               <Text className="text-white mt-5 font-bold mb-5"> Latest movies</Text>

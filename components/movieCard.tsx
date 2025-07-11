@@ -24,10 +24,10 @@ const MovieCard = ({ id, poster_path, title, vote_average, release_date, origina
                     />
 
                     {/* title  */}
-                    <Text className='mx-auto my-2 text-white text-center font-bold' numberOfLines={1}>{title}</Text>
+                    <Text className='flex-row items-center justify-start mt-2 text-white font-bold' numberOfLines={1}>{title}</Text>
 
                     {/* star ratings  */}
-                    <View className='flex-row items-center justify-start gap-x-1 ms-1'>
+                    <View className='flex-row items-center justify-start gap-x-1 '>
                         <Image className="size-3" source={icons.star} />
                         <Text className='text-white text-xs font-bold'>{Math.round(vote_average / 2)}</Text>
                     </View>
