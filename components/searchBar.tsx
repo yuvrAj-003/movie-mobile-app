@@ -1,6 +1,6 @@
 import { icons } from '@/constants/icons'
 import React from 'react'
-import { Image, TextInput, View } from 'react-native'
+import { Image, Platform, TextInput, View } from 'react-native'
 
 
 interface Props {
@@ -11,7 +11,7 @@ interface Props {
 const SearchBar = ({ onPress, onChangeText, value }: Props) => {
 
     return (
-        <View className='bg-dark-200 flex-row items-center rounded-full px-5 py-4 '>
+        <View className={`bg-dark-200 flex-row items-center rounded-full px-5 ${Platform.OS === 'android' ? 'py-2' : 'py-4'} `}>
 
             <Image
                 source={icons.search}

@@ -4,13 +4,14 @@ import SearchBar from '@/components/searchBar'
 import { icons } from '@/constants/icons'
 import { images } from '@/constants/images'
 import { fetchMovies } from '@/services/api'
+import { updateSearchCount } from '@/services/appwrite'
 import useFetch from '@/services/useFetch'
 import React, { useEffect, useState } from 'react'
 import { ActivityIndicator, FlatList, Image, ScrollView, Text, View } from 'react-native'
 
 const Search = () => {
 
-    const [searchQuery, setSearchQuery] = useState('avengers');
+    const [searchQuery, setSearchQuery] = useState('');
 
     const {
         data: movies,
@@ -20,11 +21,16 @@ const Search = () => {
         reset
     } = useFetch(() => fetchMovies({ query: searchQuery }), false)
 
+
     useEffect(() => {
 
         const movieTimeout = setTimeout(async () => {
             if (searchQuery.trim()) {
                 await loadMovies();
+
+                if (movies?.length > 0 && movies?.[0]) {
+                    updateSearchCount(searchQuery, movies[0]);
+                }
             }
             else {
                 reset()
@@ -39,6 +45,7 @@ const Search = () => {
             <Image source={images.bg} className="absolute w-full z-0" />
 
 
+
             <ScrollView
                 className="flex-1 p-5"
                 showsVerticalScrollIndicator={false}
@@ -48,6 +55,7 @@ const Search = () => {
                 }}
             >
                 <Image source={icons.logo} className="w-12 h-10 mt-20 mb=5 mx-auto z-0" />
+
 
                 {movieError &&
                     <View className="h-screen absolute w-full flex-row justify-center items-center">
