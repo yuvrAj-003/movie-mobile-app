@@ -15,9 +15,15 @@
       "bundler": "metro",
       "output": "static"
     },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/logo.png"
+      },
+      "package": "com.anonymous.movieapp"
+    },
     "plugins": [
       "expo-router",
-       [
+      [
         "expo-splash-screen",
         {
           "image": "./assets/images/logo.png",

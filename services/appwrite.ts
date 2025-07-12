@@ -1,6 +1,6 @@
 // track the searches made by user
-import { Client, Databases, Query } from "react-native-appwrite";
 
+import { Client, Databases, Query } from "react-native-appwrite";
 const PROJECT_ID = process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID!;
 const DATABASE_ID = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID!;
 const COLLECTION_ID = process.env.EXPO_PUBLIC_APPWRITE_COLLECTION_ID!;
