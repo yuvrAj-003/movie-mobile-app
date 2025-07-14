@@ -3,7 +3,7 @@ import { StatusBar } from "react-native";
 export default function RootLayout() {
 
   return <>
-    <StatusBar backgroundColor={'white'} />
+    <StatusBar hidden={true} />
     <Stack>
 
       <Stack.Screen
