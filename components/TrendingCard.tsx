@@ -13,7 +13,10 @@ const TrendingCard = ({ movie, index }: TrendingCardProps) => {
 
 
                 <Image
-                    source={{ uri: movie.poster_url }}
+                    source={{
+                        uri: movie?.poster_url ? movie?.poster_url :
+                            'https://placehold.Co/600x400/1alala/ffffff.png'
+                    }}
                     className='w-full h-48 rounded-lg z-0'
                     resizeMode='cover'
                 />
@@ -22,7 +25,7 @@ const TrendingCard = ({ movie, index }: TrendingCardProps) => {
                     <MaskedView maskElement={
                         <Text className='font-bold text-white text-6xl'>{index + 1}</Text>
                     } >
-                        <Image source={images.rankingGradient} className='size-14' resizeMode='cover' />
+                        <Image source={images?.rankingGradient} className='size-14' resizeMode='cover' />
                     </MaskedView>
                 </View>
 

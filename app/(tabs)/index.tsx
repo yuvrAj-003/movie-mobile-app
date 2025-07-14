@@ -30,9 +30,7 @@ export default function Index() {
 
   return (
     <View className='flex-1 bg-primary'>
-      <Image source={images.bg} className="absolute w-full z-0" />
-
-
+      <Image source={images.bg} className="absolute w-full z-0 top-0" />
       <ScrollView
         className="flex-1 p-5"
         showsVerticalScrollIndicator={false}
@@ -41,7 +39,7 @@ export default function Index() {
           paddingBottom: 10
         }}
       >
-        <Image source={icons.logo} className="w-12 h-10 mt-20 mb=5 mx-auto z-0" />
+        <Image source={icons.logo} className="w-12 h-10 mt-20 mb-5 mx-auto z-0" />
 
         {/* movies data */}
         {movieLoading || trendingLoading ?
@@ -63,7 +61,7 @@ export default function Index() {
               {/* recent searches  */}
               {trendingMovies?.length > 0 && (
                 <View className="mt-10">
-                  <Text className="text-white mt-5 font-bold mb-5"> Trending Movies</Text>
+                  <Text className="text-white  font-bold mb-5"> Trending Movies</Text>
                   <FlatList
                     horizontal
                     showsHorizontalScrollIndicator={false}
@@ -81,7 +79,7 @@ export default function Index() {
 
               {/* latest movies data  */}
 
-              <Text className="text-white mt-5 font-bold mb-5"> Latest Movies</Text>
+              <Text className="text-white mt-6 font-bold mb-5"> Latest Movies</Text>
               <FlatList
                 data={movies}
                 renderItem={({ item }) => (
