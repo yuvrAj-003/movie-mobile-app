@@ -45,7 +45,7 @@ export const updateSearchCount = async (query: string, movie: Movie) => {
                 title: movie.title,
                 movie_id: movie.id,
                 count: 1,
-                poster_url: `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                poster_url: movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : 'https://placehold.Co/600x400/1alala/ffffff.png'
             })
         }
         console.log("successfully updated")

@@ -45,6 +45,10 @@ export default function Index() {
         }}
       >
 
+        <View className="absolute w-full z-0 top-20">
+          <Image source={icons.logo} className="w-12 mx-auto" />
+        </View>
+
         <View className="w-full flex-row h-10 mt-20 mb-5 mx-auto justify-between items-center">
           <TouchableOpacity
             className="bg-dark-200 rounded-full px-5 py-2"
@@ -53,7 +57,8 @@ export default function Index() {
             <Text className="text-accent">Register</Text>
           </TouchableOpacity>
 
-          <Image source={icons.logo} className="w-12 z-0" />
+
+
 
           <TouchableOpacity
             className="bg-dark-200 rounded-full px-5 py-2"

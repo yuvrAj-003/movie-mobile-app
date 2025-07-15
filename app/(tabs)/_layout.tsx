@@ -6,6 +6,7 @@ import React from 'react'
 import { Image, ImageBackground, Text, View } from 'react-native'
 
 
+
 const TabIcon = ({ text, icon, focused }: any) => {
     return focused ? (
         <ImageBackground
@@ -83,7 +84,7 @@ const _layout = () => {
             <Tabs.Screen
                 name="profile"
                 options={{
-                    title: "profile",
+                    title: 'profile',
                     headerShown: false,
                     tabBarIcon: ({ focused }) =>
                         <TabIcon
@@ -93,6 +94,8 @@ const _layout = () => {
                         />
                 }}
             />
+
+
 
             <Tabs.Screen
                 name="saved"

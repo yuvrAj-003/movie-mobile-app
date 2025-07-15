@@ -6,7 +6,7 @@ import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
 const Login = () => {
     return (
-        <View className='flex justify-center items-center bg-primary h-screen'>
+        <View className='flex-1 justify-center items-center bg-primary h-screen'>
             <Image source={images.bg} className="absolute w-full z-0 top-0" />
 
             <View className='absolute top-20 left-0 right-0'>

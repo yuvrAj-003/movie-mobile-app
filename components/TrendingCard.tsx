@@ -14,8 +14,7 @@ const TrendingCard = ({ movie, index }: TrendingCardProps) => {
 
                 <Image
                     source={{
-                        uri: movie?.poster_url ? movie?.poster_url :
-                            'https://placehold.Co/600x400/1alala/ffffff.png'
+                        uri: movie.poster_url || 'https://placehold.Co/600x400/1alala/ffffff.png'
                     }}
                     className='w-full h-48 rounded-lg z-0'
                     resizeMode='cover'
