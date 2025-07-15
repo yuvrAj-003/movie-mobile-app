@@ -7,7 +7,7 @@ import { fetchMovies } from "@/services/api";
 import { getTrendingMovies } from "@/services/appwrite";
 import useFetch from "@/services/useFetch";
 import { useRouter } from "expo-router";
-import { ActivityIndicator, FlatList, Image, ScrollView, Text, View } from "react-native";
+import { ActivityIndicator, FlatList, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import "../globals.css";
 
 export default function Index() {
@@ -30,7 +30,12 @@ export default function Index() {
 
   return (
     <View className='flex-1 bg-primary'>
+
       <Image source={images.bg} className="absolute w-full z-0 top-0" />
+
+
+
+
       <ScrollView
         className="flex-1 p-5"
         showsVerticalScrollIndicator={false}
@@ -39,7 +44,25 @@ export default function Index() {
           paddingBottom: 10
         }}
       >
-        <Image source={icons.logo} className="w-12 h-10 mt-20 mb-5 mx-auto z-0" />
+
+        <View className="w-full flex-row h-10 mt-20 mb-5 mx-auto justify-between items-center">
+          <TouchableOpacity
+            className="bg-dark-200 rounded-full px-5 py-2"
+            onPress={() => router.push("/Auth/Register")}
+          >
+            <Text className="text-accent">Register</Text>
+          </TouchableOpacity>
+
+          <Image source={icons.logo} className="w-12 z-0" />
+
+          <TouchableOpacity
+            className="bg-dark-200 rounded-full px-5 py-2"
+            onPress={() => router.push("/Auth/Login")}
+          >
+            <Text className="text-accent">Login</Text>
+          </TouchableOpacity>
+        </View>
+
 
         {/* movies data */}
         {movieLoading || trendingLoading ?
