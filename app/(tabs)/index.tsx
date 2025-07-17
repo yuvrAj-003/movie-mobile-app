@@ -5,6 +5,8 @@ import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";
 import { fetchMovies } from "@/services/api";
 import { getTrendingMovies } from "@/services/appwrite";
+import { account } from "@/services/auth";
+import useAuth from "@/services/useAuth";
 import useFetch from "@/services/useFetch";
 import { useRouter } from "expo-router";
 import { ActivityIndicator, FlatList, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
@@ -28,6 +30,8 @@ export default function Index() {
     error: movieError
   } = useFetch(() => fetchMovies({ query: '' }))
 
+  const { user } = useAuth(account);
+
   return (
     <View className='flex-1 bg-primary'>
 
@@ -45,28 +49,27 @@ export default function Index() {
         }}
       >
 
-        <View className="absolute w-full z-0 top-20">
-          <Image source={icons.logo} className="w-12 mx-auto" />
-        </View>
-
         <View className="w-full flex-row h-10 mt-20 mb-5 mx-auto justify-between items-center">
-          <TouchableOpacity
+          {!user && <><TouchableOpacity
             className="bg-dark-200 rounded-full px-5 py-2"
             onPress={() => router.push("/Auth/Register")}
           >
             <Text className="text-accent">Register</Text>
-          </TouchableOpacity>
-
-
-
-
-          <TouchableOpacity
+          </TouchableOpacity><TouchableOpacity
             className="bg-dark-200 rounded-full px-5 py-2"
             onPress={() => router.push("/Auth/Login")}
           >
-            <Text className="text-accent">Login</Text>
-          </TouchableOpacity>
+              <Text className="text-accent">Login</Text>
+            </TouchableOpacity></>}
+
+          <View className="w-full mt-1 absolute">
+            <Image source={icons.logo} className="w-12 mx-auto" />
+          </View>
         </View>
+
+
+
+
 
 
         {/* movies data */}
