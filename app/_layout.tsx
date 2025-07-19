@@ -4,6 +4,7 @@ export default function RootLayout() {
 
   return <>
     <StatusBar hidden={true} />
+
     <Stack>
 
       <Stack.Screen

@@ -5,6 +5,7 @@ import useAuth from '@/services/useAuth'
 import { router } from 'expo-router'
 import React, { useState } from 'react'
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import Toast from 'react-native-toast-message'
 const Register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -14,11 +15,18 @@ const Register = () => {
     } = useAuth(account)
     return (
         <View className='flex-1 justify-center items-center bg-primary h-screen'>
+
+
+
+
             <Image source={images.bg} className="absolute w-full z-0 top-0" />
 
-            <View className='absolute top-20 left-0 right-0'>
+            <View className='absolute top-20 left-0 right-0 z-0'>
                 <Text className='text-white text-center font-bold text-xl'>Sign Up</Text>
             </View>
+
+            <Toast />
+
 
             <View className='flex-col gap-y-4 w-3/4 justify-center items-center'>
                 <TextInput
@@ -38,7 +46,26 @@ const Register = () => {
                 <TouchableOpacity
                     className='flex-row justify-center items-center gap-x-2 ml-3 w-full bg-dark-100 rounded-full px-4 py-2.5'
                     onPress={() => {
-                        SignWithGoogle().then(() => router.push('/'))
+                        SignWithGoogle().then(() => {
+                            Toast.show({
+                                type: 'success',
+                                text1: 'Sign Up Successful',
+                                position: 'top',
+                                topOffset: 60,
+
+                            });
+                            setTimeout(() => router.push('/'), 1000)
+                        }).catch((err) => {
+                            Toast.show({
+                                type: 'error',
+                                text1: "Error",
+                                text2: err.message,
+                                position: 'top',
+                                topOffset: 60,
+
+
+                            });
+                        })
                     }}
                 >
                     <Image source={icons.google} className='size-5' />
@@ -48,7 +75,29 @@ const Register = () => {
                 <TouchableOpacity
                     className=' ml-3 w-full bg-accent rounded-full px-4 py-3'
                     onPress={() => {
-                        SignUpWithEmailAndPassword(email, password).then(() => router.push('/'))
+                        SignUpWithEmailAndPassword(email, password).then(() => {
+                            Toast.show({
+                                type: 'success',
+                                text1: 'Sign Up Successful',
+                                position: 'top',
+                                topOffset: 60,
+
+                            });
+                            setTimeout(() => router.push('/'), 1000)
+                        }).catch((err) => {
+                            Toast.show({
+                                type: 'error',
+                                text1: "Error",
+                                text2: err.message,
+                                position: 'top',
+                                topOffset: 60,
+
+
+                            });
+                        })
+
+
+
 
                     }}
                 >

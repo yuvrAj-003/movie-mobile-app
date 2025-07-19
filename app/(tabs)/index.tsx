@@ -71,7 +71,6 @@ export default function Index() {
 
 
 
-
         {/* movies data */}
         {movieLoading || trendingLoading ?
           (<ActivityIndicator

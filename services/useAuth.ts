@@ -5,7 +5,8 @@ import * as WebBrowser from 'expo-web-browser';
 import { useEffect, useState } from 'react';
 import { Account, ID, Models, OAuthProvider } from "react-native-appwrite";
 
-// login with google
+
+// console.log login with google
 const useAuth = (account: Account) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<Error | null>(null);
@@ -18,7 +19,7 @@ const useAuth = (account: Account) => {
         try {
             setLoading(true);
             const deepLink = new URL(makeRedirectUri());
-            const scheme = `${deepLink.protocol}//`;
+            const scheme = `${deepLink.protocol}// console.log`;
 
             // Start OAuth flow
             const loginUrl = await account.createOAuth2Token(
@@ -37,10 +38,12 @@ const useAuth = (account: Account) => {
 
             // Create session with OAuth credentials
             await account.createSession(userId, secret);
-            console.log("google account logged in")
+            // console.log("google account logged in")
         } catch (err) {
             setError(err instanceof Error ? err : new Error('An error occured'))
-            console.log(err);
+            const e = String(err).replace(":", ".")
+            // console.log(e.split(".")[1])
+            throw new Error(e.split(".")[1])
         }
         finally {
             setLoading(false);
@@ -64,11 +67,15 @@ const useAuth = (account: Account) => {
             )
 
             fetchInfo();
-            console.log('account created successfully');
+            // console.log('account created successfully');
 
         } catch (err) {
             setError(err instanceof Error ? err : new Error('An error occured'))
-            console.log(err);
+            const e = String(err).replace(":", ".")
+            // console.log(e.split(".")[1])
+            throw new Error(e.split(".")[1])
+
+
         }
         finally {
             setLoading(false);
@@ -84,12 +91,15 @@ const useAuth = (account: Account) => {
             )
 
             fetchInfo()
-            console.log("logged in successfully");
+            // console.log("logged in successfully");
 
 
         } catch (err) {
             setError(err instanceof Error ? err : new Error('An error occured'))
-            console.log(err);
+            const e = String(err).replace(":", ".")
+            // console.log(e.split(".")[1])
+            throw new Error(e.split(".")[1])
+
         }
         finally {
             setLoading(false);
@@ -99,7 +109,7 @@ const useAuth = (account: Account) => {
     const fetchInfo = async () => {
         const user = await account.get();
         setUser(user);
-        console.log("user authenticated")
+        // console.log("user authenticated")
 
     }
 
