@@ -56,6 +56,7 @@ const Register = () => {
                             });
                             setTimeout(() => router.push('/'), 1000)
                         }).catch((err) => {
+                            console.log(err);
                             Toast.show({
                                 type: 'error',
                                 text1: "Error",

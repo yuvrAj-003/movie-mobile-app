@@ -19,7 +19,7 @@ const useAuth = (account: Account) => {
         try {
             setLoading(true);
             const deepLink = new URL(makeRedirectUri());
-            const scheme = `${deepLink.protocol}// console.log`;
+            const scheme = `${deepLink.protocol}`;
 
             // Start OAuth flow
             const loginUrl = await account.createOAuth2Token(
