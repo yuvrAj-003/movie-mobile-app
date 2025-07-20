@@ -31,7 +31,7 @@ const Register = () => {
             <View className='flex-col gap-y-4 w-3/4 justify-center items-center'>
                 <TextInput
                     className='ml-3 w-full text-white bg-dark-200 rounded-full px-4 py-3'
-                    placeholder='Enter your username'
+                    placeholder='Enter your email'
                     placeholderTextColor='#ab8bff'
                     onChangeText={(text: string) => setEmail(text)}
                 />
@@ -56,7 +56,7 @@ const Register = () => {
                             });
                             setTimeout(() => router.push('/'), 1000)
                         }).catch((err) => {
-                            console.log(err);
+
                             Toast.show({
                                 type: 'error',
                                 text1: "Error",

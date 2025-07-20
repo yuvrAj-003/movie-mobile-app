@@ -30,14 +30,12 @@ export default function Index() {
     error: movieError
   } = useFetch(() => fetchMovies({ query: '' }))
 
-  const { user, loading } = useAuth(account);
+  const { user, loading: AuthLoading } = useAuth(account);
 
   return (
     <View className='flex-1 bg-primary'>
 
       <Image source={images.bg} className="absolute w-full z-0 top-0" />
-
-
 
 
       <ScrollView
@@ -48,31 +46,52 @@ export default function Index() {
           paddingBottom: 10
         }}
       >
-        {loading && <ActivityIndicator size="small" color="white"
-          className="mt-20"
-        />}
 
+
+
+        {/* header  */}
 
         <View className="w-full flex-row h-10 mt-20 mb-5 mx-auto justify-between items-center">
-          {(!user && !loading) && <>
-            <TouchableOpacity
-              className="bg-dark-200 rounded-full px-5 py-2"
-              onPress={() => router.push("/Auth/Register")}
-            >
-              <Text className="text-accent">Register</Text>
-            </TouchableOpacity>
+
+          {/* regsiter sign out  */}
+          {(!user && !AuthLoading) &&
+            <>
+              <TouchableOpacity
+                className="bg-dark-200 rounded-full px-5 py-2"
+                onPress={() => router.push("/Auth/Register")}
+              >
+                <Text className="text-accent">Register</Text>
+              </TouchableOpacity>
 
 
-            <TouchableOpacity
-              className="bg-dark-200 rounded-full px-5 py-2"
-              onPress={() => router.push("/Auth/Login")}
-            >
-              <Text className="text-accent">Login</Text>
-            </TouchableOpacity></>}
+              <TouchableOpacity
+                className="bg-dark-200 rounded-full px-5 py-2"
+                onPress={() => router.push("/Auth/Login")}
+              >
+                <Text className="text-accent">Login</Text>
+              </TouchableOpacity>
+            </>
+          }
 
-          <View className="w-full mt-1 absolute">
+          {/* profile icon  */}
+          {user &&
+            <>
+
+              <TouchableOpacity
+                className="w-[40px] h-[40px] bg-white rounded-full flex justify-center items-center"
+                onPress={() => router.push("/profile")}
+              >
+                <Image source={icons.profile} resizeMode="cover" className="size-8" />
+              </TouchableOpacity>
+
+            </>
+          }
+
+          {/* logo  */}
+          <View className="w-full absolute">
             <Image source={icons.logo} className="w-12 mx-auto" />
           </View>
+
         </View>
 
 
@@ -80,7 +99,9 @@ export default function Index() {
 
 
         {/* movies data */}
-        {movieLoading || trendingLoading ?
+
+        {/* loading indicator */}
+        {movieLoading || trendingLoading || AuthLoading ?
           (<ActivityIndicator
             size={5} className="mt-5" />
           ) : movieError || trendingError ? (
@@ -96,7 +117,7 @@ export default function Index() {
                 value={''}
               />
 
-              {/* recent searches  */}
+              {/* trending */}
               {trendingMovies?.length > 0 && (
                 <View className="mt-10">
                   <Text className="text-white  font-bold mb-5"> Trending Movies</Text>

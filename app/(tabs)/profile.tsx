@@ -1,25 +1,39 @@
 
+import CustomDialogBox from '@/components/CustomDialogBox'
 import { icons } from '@/constants/icons'
 import { images } from '@/constants/images'
 import { account } from '@/services/auth'
 import useAuth from '@/services/useAuth'
 import { router } from 'expo-router'
-import React from 'react'
-import { ActivityIndicator, Image, Text, TouchableOpacity, View } from 'react-native'
+import React, { useState } from 'react'
+import { ActivityIndicator, Image, Text, TouchableOpacity, View, } from 'react-native'
 import { Models } from 'react-native-appwrite'
+
 
 const Profile = () => {
 
     const { loading, user } = useAuth(account);
     const usr = user as Models.Preferences
-    // const router = useRouter();
+
+    const { SignOut } = useAuth(account);
+
+    // const [confirmDelete, setConfirmDelete] = useState(false)
+
+    const [confirmSignOut, setConfirmSignOut] = useState(false)
+
+
 
     return (
         <View className="flex-1 bg-primary h-full w-full justify-center items-center">
             <Image source={images.bg} className="absolute w-full z-0 top-0" />
+
+
+            {/* loading  */}
+
             {loading && <ActivityIndicator size="large" color="white" className='mt-20'
             />}
 
+            {/* error message  */}
             {
                 (!user && !loading) &&
                 <View className='h-full w-full flex-1 flex-col items-center justify-center'>
@@ -37,6 +51,7 @@ const Profile = () => {
                 </View>
             }
 
+            {/* user info  */}
             {user &&
                 <View className=' bg-dark-200 w-5/6 rounded-xl p-3 relative flex-col justify-center items-center'>
                     {/* profile image  */}
@@ -65,13 +80,61 @@ const Profile = () => {
                         <Text className='text-white'>{usr?.email}</Text>
                     </View>
 
-                    <TouchableOpacity className='bg-accent rounded-full px-3 py-4 w-3/6 mt-5 flex justify-center items-center'>
+                    {/* sign out  */}
+                    <TouchableOpacity
+                        className='bg-accent rounded-full px-3 py-4 w-3/6 mt-5 mb-4 flex justify-center items-center'
+                        onPress={() => setConfirmSignOut(true)}
+                    >
                         <Text className='text-primary font-bold'>Sign Out</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity className='bg-red-400 rounded-full px-3 py-4 w-4/6 mt-5 mb-5 flex justify-center items-center'>
-                        <Text className='text-primary font-bold'>Delete Your Account</Text>
-                    </TouchableOpacity>
+                    {/* sign out dialog box  */}
+                    <CustomDialogBox
+                        title="Sign Out"
+                        ConfirmColor="bg-accent"
+                        message="Do You want to Sign Out ?"
+                        visible={confirmSignOut}
+                        onClose={() => setConfirmSignOut(false)}
+                        onConfirm={async () => {
+                            await SignOut('current')
+                            router.push('/Auth/Register')
+                            setTimeout(() => {
+                                router.push('/')
+                            }, 100);
+                            setConfirmSignOut(false)
+                        }}
+                    />
+
+
+
+                    {/* delete account  */}
+
+                    {/* <TouchableOpacity
+                        className='bg-red-400 rounded-full px-3 py-4 w-4/6 mt-5 mb-5 flex justify-center items-center'
+                        onPress={() => setConfirmDelete(true)}
+
+                    >
+                        <Text className='text-primary font-bold'>Delete Account</Text>
+                    </TouchableOpacity> */}
+
+
+
+                    {/* delete account dialog box  */}
+
+                    {/* <CustomDialogBox
+                        title="Delete Account"
+                        message="All your saved content will be lost !"
+                        ConfirmColor="bg-red-400"
+                        visible={confirmDelete}
+                        onClose={() => setConfirmDelete(false)}
+                        onConfirm={() => {
+                            setConfirmDelete(false)
+                            DeleteAccount();
+                            router.push("/")
+                        }}
+                        /> 
+                    */}
+
 
 
                 </View>
