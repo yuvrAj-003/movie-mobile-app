@@ -30,7 +30,7 @@ export default function Index() {
     error: movieError
   } = useFetch(() => fetchMovies({ query: '' }))
 
-  const { user } = useAuth(account);
+  const { user, loading } = useAuth(account);
 
   return (
     <View className='flex-1 bg-primary'>
@@ -48,17 +48,25 @@ export default function Index() {
           paddingBottom: 10
         }}
       >
+        {loading && <ActivityIndicator size="small" color="white"
+          className="mt-20"
+        />}
+
 
         <View className="w-full flex-row h-10 mt-20 mb-5 mx-auto justify-between items-center">
-          {!user && <><TouchableOpacity
-            className="bg-dark-200 rounded-full px-5 py-2"
-            onPress={() => router.push("/Auth/Register")}
-          >
-            <Text className="text-accent">Register</Text>
-          </TouchableOpacity><TouchableOpacity
-            className="bg-dark-200 rounded-full px-5 py-2"
-            onPress={() => router.push("/Auth/Login")}
-          >
+          {(!user && !loading) && <>
+            <TouchableOpacity
+              className="bg-dark-200 rounded-full px-5 py-2"
+              onPress={() => router.push("/Auth/Register")}
+            >
+              <Text className="text-accent">Register</Text>
+            </TouchableOpacity>
+
+
+            <TouchableOpacity
+              className="bg-dark-200 rounded-full px-5 py-2"
+              onPress={() => router.push("/Auth/Login")}
+            >
               <Text className="text-accent">Login</Text>
             </TouchableOpacity></>}
 

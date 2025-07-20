@@ -51,13 +51,14 @@ const useAuth = (account: Account) => {
     };
 
 
-    const SignUpWithEmailAndPassword = async (email: string, password: string) => {
+    const SignUpWithEmailAndPassword = async (username: string, email: string, password: string) => {
         try {
             setLoading(true);
             await account.create(
                 ID.unique(),
                 email,
-                password
+                password,
+                username
             )
 
 
@@ -107,9 +108,21 @@ const useAuth = (account: Account) => {
     }
 
     const fetchInfo = async () => {
-        const user = await account.get();
-        setUser(user);
-        // console.log("user authenticated")
+        try {
+            setLoading(true);
+            const user = await account.get();
+
+            setUser(user);
+            console.log("user authenticated")
+
+        }
+        catch (err) {
+            setError(err instanceof Error ? err : new Error("an error occured"))
+        }
+        finally {
+            setLoading(false);
+        }
+
 
     }
 

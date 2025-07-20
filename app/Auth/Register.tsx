@@ -9,6 +9,7 @@ import Toast from 'react-native-toast-message'
 const Register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('');
     const {
         SignWithGoogle,
         SignUpWithEmailAndPassword
@@ -32,6 +33,12 @@ const Register = () => {
                 <TextInput
                     className='ml-3 w-full text-white bg-dark-200 rounded-full px-4 py-3'
                     placeholder='Enter your username'
+                    placeholderTextColor='#ab8bff'
+                    onChangeText={(text: string) => setUsername(text)}
+                />
+                <TextInput
+                    className='ml-3 w-full text-white bg-dark-200 rounded-full px-4 py-3'
+                    placeholder='Enter your email'
                     placeholderTextColor='#ab8bff'
                     onChangeText={(text: string) => setEmail(text)}
                 />
@@ -75,7 +82,7 @@ const Register = () => {
                 <TouchableOpacity
                     className=' ml-3 w-full bg-accent rounded-full px-4 py-3'
                     onPress={() => {
-                        SignUpWithEmailAndPassword(email, password).then(() => {
+                        SignUpWithEmailAndPassword(username, email, password).then(() => {
                             Toast.show({
                                 type: 'success',
                                 text1: 'Sign Up Successful',
