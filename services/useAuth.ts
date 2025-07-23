@@ -129,7 +129,6 @@ const useAuth = (account: Account) => {
             const user = await account.get();
 
             setUser(user);
-            // console.log("user authenticated")
 
         }
         catch (err) {

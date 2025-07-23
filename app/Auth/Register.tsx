@@ -52,7 +52,7 @@ const Register = () => {
                 />
 
                 <View className='ml-3 w-full bg-dark-200 rounded-xl px-4 py-3'>
-                    <Text className='text-white font-thin'>Please note down your password bacause there no forget password option.</Text>
+                    <Text className='text-white font-thin'>Please remember your password bacause there is no forget password option.</Text>
                 </View>
 
                 <TouchableOpacity

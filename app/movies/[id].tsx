@@ -1,8 +1,12 @@
 import { icons } from '@/constants/icons';
 import { fetchMovieDetails } from '@/services/api';
+import { saveMovie } from '@/services/appwrite';
+import { account } from '@/services/auth';
+import useAuth from '@/services/useAuth';
 import useFetch from '@/services/useFetch';
 import { router, useLocalSearchParams } from 'expo-router';
 import React from 'react';
+
 import { ActivityIndicator, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
 
@@ -25,10 +29,10 @@ const MovieInfo = ({ label, value }: MovieInfoProps) => (
     </View>
 )
 const MovieDetails = () => {
-
-
     const { id } = useLocalSearchParams();
 
+
+    const { user } = useAuth(account);
     const {
         data: movie,
         loading: movieLoading,
@@ -72,7 +76,42 @@ const MovieDetails = () => {
                         </View>
 
                         <View className='flex-col items-start justify-center mt-5 px-5'>
-                            <Text className='text-white font-bold text-xl'>{movie?.title}</Text>
+
+                            <View className='w-full flex-row justify-between items-center'>
+                                {/* title  */}
+                                <Text className='text-white font-bold text-xl'>{movie?.title}</Text>
+
+                                {/* saved  */}
+                                <TouchableOpacity
+                                    className='p-3 bg-dark-200 rounded-xl flex-row gap-x-2 items-center justify-center'
+                                    onPress={async () => {
+
+                                        if (user) {
+                                            await saveMovie(
+                                                id.toString(),
+                                                user.$id,
+                                                movie?.title,
+                                                movie?.poster_path
+                                            )
+                                            // setIsSaved(!isSaved)
+                                        }
+                                        else {
+                                            router.push("/")
+                                        }
+
+                                    }}
+                                >
+                                    <Image
+                                        source={icons.sve} className='size-5'
+                                        tintColor={'white'}
+                                    />
+
+                                    {/* save count  */}
+
+                                    {/* <Text className={`${isSaved ? 'text-light-100' : 'text-white'}`}
+                                    >0</Text> */}
+                                </TouchableOpacity>
+                            </View>
 
                             <View className='flex-row items-center gap-x-1 mt-2'>
                                 <Text className='text-light-200 text-sm'>

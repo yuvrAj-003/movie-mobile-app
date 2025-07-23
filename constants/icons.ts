@@ -8,8 +8,10 @@ import play from "@/assets/icons/play.png";
 import profile from "@/assets/icons/profile.png";
 import register from "@/assets/icons/register.png";
 import save from "@/assets/icons/save.png";
+import saved from "@/assets/icons/saved.png";
 import search from "@/assets/icons/search.png";
 import star from "@/assets/icons/star.png";
+import sve from "@/assets/icons/sve.png";
 
 export const icons = {
   home,
@@ -23,5 +25,7 @@ export const icons = {
   login,
   register,
   google,
-  profile
+  profile,
+  sve,
+  saved
 };

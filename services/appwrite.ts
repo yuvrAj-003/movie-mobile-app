@@ -6,7 +6,7 @@ const PROJECT_ID = process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID!;
 const DATABASE_ID = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID!;
 const COLLECTION_ID = process.env.EXPO_PUBLIC_APPWRITE_T_COLLECTION_ID!;
 const ENDPOINT = process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT!;
-
+const SAVED_ID = process.env.EXPO_PUBLIC_APPWRITE_S_COLLECTION_ID!;
 
 const client = new Client()
     .setEndpoint(ENDPOINT)
@@ -14,6 +14,7 @@ const client = new Client()
 
 const database = new Databases(client);
 
+// update search count 
 export const updateSearchCount = async (query: string, movie: Movie) => {
 
     // query
@@ -56,7 +57,7 @@ export const updateSearchCount = async (query: string, movie: Movie) => {
 
 }
 
-
+// get trending movies 
 export const getTrendingMovies = async (): Promise<TrendingMovie[] | undefined> => {
 
     try {
@@ -71,3 +72,45 @@ export const getTrendingMovies = async (): Promise<TrendingMovie[] | undefined> 
 
     }
 }
+
+// save movies 
+
+export const saveMovie = async (
+    movie_id: string,
+    user_id: string,
+    title: string | undefined,
+    poster_url: string | null | undefined
+) => {
+    try {
+        // try deleting first
+        await database.deleteDocument(
+            DATABASE_ID,
+            SAVED_ID.toString(),
+            movie_id
+        );
+        console.log('Deleted');
+    } catch (error: any) {
+        if (error.code === 404) {
+            try {
+                await database.createDocument(
+                    DATABASE_ID,
+                    SAVED_ID.toString(),
+                    movie_id,
+                    {
+                        movie_id: parseInt(movie_id),
+                        user_id: parseInt(user_id),
+                        title: title,
+                        poster_url: poster_url
+                            ? `https://image.tmdb.org/t/p/w500${poster_url}`
+                            : 'https://placehold.co/600x400/1alala/ffffff.png',
+                    }
+                );
+                console.log('Saved');
+            } catch (createErr) {
+                console.error('Create Error:', createErr);
+            }
+        } else {
+            console.error('Get Error:', error);
+        }
+    }
+};
