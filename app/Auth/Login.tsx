@@ -7,6 +7,7 @@ import React, { useState } from 'react'
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import Toast from 'react-native-toast-message'
 const Login = () => {
+    const [showPass, setShowPass] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const {
@@ -36,13 +37,22 @@ const Login = () => {
                     onChangeText={(text: string) => setEmail(text)}
                 />
 
-                <TextInput
-                    className='ml-3 w-full text-white bg-dark-200 rounded-full px-4 py-3'
-                    placeholder='Enter your Password'
-                    placeholderTextColor='#ab8bff'
-                    secureTextEntry={true}
-                    onChangeText={(text: string) => setPassword(text)}
-                />
+                <View className='ml-3 w-full relative'>
+                    <TextInput
+                        className=' w-full text-white bg-dark-200 rounded-full px-4 py-3 z-0'
+                        placeholder='Enter your Password'
+                        placeholderTextColor='#ab8bff'
+                        secureTextEntry={!showPass}
+                        onChangeText={(text: string) => setPassword(text)}
+                    />
+
+                    <TouchableOpacity
+                        className='absolute right-5 z-1 flex-row h-full items-center justify-center'
+                        onPress={() => setShowPass(!showPass)}
+                    >
+                        <Image source={showPass ? icons.closed : icons.open} tintColor='white' className='size-5' />
+                    </TouchableOpacity>
+                </View>
 
 
                 <TouchableOpacity
@@ -81,7 +91,7 @@ const Login = () => {
                 <TouchableOpacity
                     className=' ml-3 w-full bg-accent rounded-full px-4 py-3'
                     onPress={() => {
-                        if (email.trim() !== '' || password.trim() !== '') {
+                        if (email.trim() !== '' && password.trim() !== '') {
                             SignInWithEmailAndPassword(email, password).then(() => {
                                 Toast.show({
                                     type: 'success',
