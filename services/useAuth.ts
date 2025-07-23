@@ -129,7 +129,7 @@ const useAuth = (account: Account) => {
             const user = await account.get();
 
             setUser(user);
-            console.log("user authenticated")
+            // console.log("user authenticated")
 
         }
         catch (err) {
@@ -138,7 +138,6 @@ const useAuth = (account: Account) => {
         finally {
             setLoading(false);
         }
-
 
     }
 

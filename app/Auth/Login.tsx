@@ -6,7 +6,7 @@ import { router } from 'expo-router'
 import React, { useState } from 'react'
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import Toast from 'react-native-toast-message'
-const Register = () => {
+const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const {
@@ -40,8 +40,10 @@ const Register = () => {
                     className='ml-3 w-full text-white bg-dark-200 rounded-full px-4 py-3'
                     placeholder='Enter your Password'
                     placeholderTextColor='#ab8bff'
+                    secureTextEntry={true}
                     onChangeText={(text: string) => setPassword(text)}
                 />
+
 
                 <TouchableOpacity
                     className='flex-row justify-center items-center gap-x-2 ml-3 w-full bg-dark-100 rounded-full px-4 py-2.5'
@@ -73,28 +75,43 @@ const Register = () => {
                     <Text className='text-center text-white'>Google</Text>
                 </TouchableOpacity>
 
+
+
+
                 <TouchableOpacity
                     className=' ml-3 w-full bg-accent rounded-full px-4 py-3'
                     onPress={() => {
-                        SignInWithEmailAndPassword(email, password).then(() => {
-                            Toast.show({
-                                type: 'success',
-                                text1: 'Login Successful',
-                                position: 'top',
-                                topOffset: 60,
+                        if (email.trim() !== '' || password.trim() !== '') {
+                            SignInWithEmailAndPassword(email, password).then(() => {
+                                Toast.show({
+                                    type: 'success',
+                                    text1: 'Login Successful',
+                                    position: 'top',
+                                    topOffset: 60,
 
-                            });
-                            setTimeout(() => router.push('/'), 1000)
-                        }).catch((err) => {
+                                });
+                                setTimeout(() => router.push('/'), 1000)
+                            }).catch((err) => {
+                                Toast.show({
+                                    type: 'error',
+                                    text1: "Error",
+                                    text2: err.message,
+                                    position: 'top',
+                                    topOffset: 60,
+
+                                });
+                            })
+                        }
+                        else {
                             Toast.show({
                                 type: 'error',
                                 text1: "Error",
-                                text2: err.message,
+                                text2: "Fields are empty",
                                 position: 'top',
                                 topOffset: 60,
 
                             });
-                        })
+                        }
 
                     }}
                 >
@@ -105,4 +122,4 @@ const Register = () => {
     )
 }
 
-export default Register
+export default Login

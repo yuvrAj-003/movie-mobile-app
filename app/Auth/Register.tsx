@@ -47,8 +47,13 @@ const Register = () => {
                     className='ml-3 w-full text-white bg-dark-200 rounded-full px-4 py-3'
                     placeholder='Enter your Password'
                     placeholderTextColor='#ab8bff'
+                    secureTextEntry={true}
                     onChangeText={(text: string) => setPassword(text)}
                 />
+
+                <View className='ml-3 w-full bg-dark-200 rounded-xl px-4 py-3'>
+                    <Text className='text-white font-thin'>Please note down your password bacause there no forget password option.</Text>
+                </View>
 
                 <TouchableOpacity
                     className='flex-row justify-center items-center gap-x-2 ml-3 w-full bg-dark-100 rounded-full px-4 py-2.5'
@@ -83,30 +88,37 @@ const Register = () => {
                 <TouchableOpacity
                     className=' ml-3 w-full bg-accent rounded-full px-4 py-3'
                     onPress={() => {
-                        SignUpWithEmailAndPassword(username, email, password).then(() => {
-                            Toast.show({
-                                type: 'success',
-                                text1: 'Sign Up Successful',
-                                position: 'top',
-                                topOffset: 60,
 
-                            });
-                            setTimeout(() => router.push('/'), 1000)
-                        }).catch((err) => {
+                        if (username.trim() !== '' && email.trim() !== '' && password.trim() !== '') {
+                            SignUpWithEmailAndPassword(username, email, password).then(() => {
+                                Toast.show({
+                                    type: 'success',
+                                    text1: 'Sign Up Successful',
+                                    position: 'top',
+                                    topOffset: 60,
+
+                                });
+                                setTimeout(() => router.push('/'), 1000)
+                            }).catch((err) => {
+                                Toast.show({
+                                    type: 'error',
+                                    text1: "Error",
+                                    text2: err.message,
+                                    position: 'top',
+                                    topOffset: 60,
+                                });
+                            })
+                        }
+                        else {
                             Toast.show({
                                 type: 'error',
                                 text1: "Error",
-                                text2: err.message,
+                                text2: "Fields are empty",
                                 position: 'top',
                                 topOffset: 60,
 
-
                             });
-                        })
-
-
-
-
+                        }
                     }}
                 >
                     <Text className='text-center font-bold text-primary'>Sign Up</Text>

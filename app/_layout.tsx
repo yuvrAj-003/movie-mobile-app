@@ -22,6 +22,12 @@ export default function RootLayout() {
         options={{ headerShown: false }}
 
       />
+
+      <Stack.Screen
+        name="ForgetPass"
+        options={{ headerShown: false }}
+
+      />
     </Stack>
   </>
 }
