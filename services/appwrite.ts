@@ -50,8 +50,9 @@ export const updateSearchCount = async (query: string, movie: Movie) => {
             })
         }
         console.log("successfully updated")
-    } catch (error) {
-        console.log(error)
+    } catch (err) {
+        console.log(err);
+        throw new Error('An error occured ' + err);
 
     }
 
@@ -67,6 +68,7 @@ export const getTrendingMovies = async (): Promise<TrendingMovie[] | undefined> 
         ])
         return result.documents as unknown as TrendingMovie[]
     } catch (error) {
+
         console.log(error);
         return undefined;
 
