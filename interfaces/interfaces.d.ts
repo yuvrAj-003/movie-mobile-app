@@ -77,8 +77,8 @@ interface TrendingCardProps {
 }
 
 interface savedMovie {
-  user_id: int,
-  movie_id: int,
+  user_id: number,
+  movie_id: number,
   title: string,
   poster_url: string
 }

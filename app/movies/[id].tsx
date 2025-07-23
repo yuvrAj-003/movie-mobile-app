@@ -31,8 +31,8 @@ const MovieInfo = ({ label, value }: MovieInfoProps) => (
 const MovieDetails = () => {
     const { id } = useLocalSearchParams();
 
-
     const { user } = useAuth(account);
+
     const {
         data: movie,
         loading: movieLoading,
@@ -43,6 +43,8 @@ const MovieDetails = () => {
     return (
 
         <View className='bg-primary flex-1'>
+
+
             {/* movie loading   */}
             {movieLoading &&
                 <View className='h-screen absolute w-full flex-row justify-center items-center'>
@@ -75,11 +77,12 @@ const MovieDetails = () => {
                             />
                         </View>
 
+
                         <View className='flex-col items-start justify-center mt-5 px-5'>
 
                             <View className='w-full flex-row justify-between items-center'>
                                 {/* title  */}
-                                <Text className='text-white font-bold text-xl'>{movie?.title}</Text>
+                                <Text className='text-white font-bold text-xl w-3/4' numberOfLines={1}>{movie?.title}</Text>
 
                                 {/* saved  */}
                                 <TouchableOpacity
@@ -87,13 +90,13 @@ const MovieDetails = () => {
                                     onPress={async () => {
 
                                         if (user) {
+
                                             await saveMovie(
                                                 id.toString(),
                                                 user.$id,
                                                 movie?.title,
                                                 movie?.poster_path
                                             )
-                                            // setIsSaved(!isSaved)
                                         }
                                         else {
                                             router.push("/")

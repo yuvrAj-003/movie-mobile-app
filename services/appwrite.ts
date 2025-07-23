@@ -114,3 +114,28 @@ export const saveMovie = async (
         }
     }
 };
+
+
+
+export const getSavedMovies = async (userId?: string | undefined): Promise<savedMovie[] | undefined> => {
+
+
+
+    try {
+
+        const result = await database.listDocuments(
+            DATABASE_ID,
+            SAVED_ID.toString(),
+            [
+                Query.equal('user_id', parseInt(userId!))
+            ]
+        )
+        return result.documents as unknown as savedMovie[];
+    }
+    catch (err) {
+        console.log(err);
+        return undefined;
+    }
+
+
+}

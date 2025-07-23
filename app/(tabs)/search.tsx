@@ -26,7 +26,7 @@ const Search = () => {
 
         const movieTimeout = setTimeout(async () => {
             if (searchQuery.trim()) {
-                await loadMovies();
+                await loadMovies('');
             }
             else {
                 reset()
