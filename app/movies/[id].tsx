@@ -1,13 +1,15 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { icons } from '@/constants/icons';
 import { fetchMovieDetails } from '@/services/api';
-import { saveMovie } from '@/services/appwrite';
+import { checkExisting, saveMovie } from '@/services/appwrite';
 import { account } from '@/services/auth';
 import useAuth from '@/services/useAuth';
 import useFetch from '@/services/useFetch';
-import { router, useLocalSearchParams } from 'expo-router';
-import React from 'react';
+import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
+import React, { useCallback, useState } from 'react';
 
 import { ActivityIndicator, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import Toast from 'react-native-toast-message';
 
 
 interface MovieInfoProps {
@@ -29,15 +31,34 @@ const MovieInfo = ({ label, value }: MovieInfoProps) => (
     </View>
 )
 const MovieDetails = () => {
+
+    const [isSaved, setIsSaved] = useState<boolean>(true);
+
+
+
     const { id } = useLocalSearchParams();
 
     const { user } = useAuth(account);
+
+    useFocusEffect(
+        useCallback(() => {
+            async function check() {
+
+                const existing = await checkExisting(id.toString(), user?.$id)
+                setIsSaved(existing);
+            }
+
+            check()
+        }, [isSaved, user?.$id])
+    )
+
 
     const {
         data: movie,
         loading: movieLoading,
         error: movieError
     } = useFetch(() => fetchMovieDetails(id as string))
+
 
 
     return (
@@ -67,7 +88,8 @@ const MovieDetails = () => {
                         showsVerticalScrollIndicator={false}
                         contentContainerStyle={{
                             paddingBottom: 80
-                        }}>
+                        }}
+                    >
 
                         <View>
                             <Image
@@ -77,6 +99,8 @@ const MovieDetails = () => {
                             />
                         </View>
 
+
+                        <Toast />
 
                         <View className='flex-col items-start justify-center mt-5 px-5'>
 
@@ -97,6 +121,28 @@ const MovieDetails = () => {
                                                 movie?.title,
                                                 movie?.poster_path
                                             )
+
+                                            setIsSaved(!isSaved);
+
+                                            if (isSaved) {
+                                                Toast.show({
+                                                    type: 'error',
+                                                    text1: 'Removed',
+                                                    position: 'top',
+                                                    topOffset: 60,
+
+                                                });
+                                            }
+                                            else {
+                                                Toast.show({
+                                                    type: 'success',
+                                                    text1: 'Saved',
+                                                    position: 'top',
+                                                    topOffset: 60,
+
+                                                });
+
+                                            }
                                         }
                                         else {
                                             router.push("/")
@@ -106,13 +152,13 @@ const MovieDetails = () => {
                                 >
                                     <Image
                                         source={icons.sve} className='size-5'
-                                        tintColor={'white'}
+                                        tintColor={isSaved ? '#D6C6FF' : 'white'}
                                     />
 
                                     {/* save count  */}
 
                                     {/* <Text className={`${isSaved ? 'text-light-100' : 'text-white'}`}
-                                    >0</Text> */}
+                                    >{smovie?.save_count} </Text> */}
                                 </TouchableOpacity>
                             </View>
 

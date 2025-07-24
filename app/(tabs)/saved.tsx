@@ -87,20 +87,20 @@ const Saved = () => {
                                 numColumns={2}
                                 scrollEnabled={false}
                                 columnWrapperStyle={{
-                                    justifyContent: "center",
+                                    justifyContent: "space-between",
                                     gap: 20,
                                     paddingRight: 5,
                                     marginBottom: 10
                                 }}
 
-                                className="mt-5 pb-32 w-full"
+                                className="mt-5 pb-32"
 
                                 ListHeaderComponent={
                                     <>
 
                                         {movieLoading && <ActivityIndicator size='large' color='white' className='mt-3 mb-5 ' />}
 
-                                        <Text className='text-white font-bold'>Saved Movies</Text>
+                                        <Text className='text-white font-bold ml-2'>Saved Movies</Text>
 
 
                                     </>

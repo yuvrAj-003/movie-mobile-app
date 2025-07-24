@@ -50,7 +50,7 @@ const Login = () => {
                         className='absolute right-5 z-1 flex-row h-full items-center justify-center'
                         onPress={() => setShowPass(!showPass)}
                     >
-                        <Image source={showPass ? icons.closed : icons.open} tintColor='white' className='size-5' />
+                        <Image source={showPass ? icons.closed : icons.open} tintColor='#D6C6FF' className='size-5' />
                     </TouchableOpacity>
                 </View>
 

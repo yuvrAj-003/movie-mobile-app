@@ -1,6 +1,10 @@
 // track the searches made by user
 
-import { Client, Databases, Query } from "react-native-appwrite";
+import { Client, Databases, ID, Query } from "react-native-appwrite";
+
+// save movies 
+
+
 
 const PROJECT_ID = process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID!;
 const DATABASE_ID = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID!;
@@ -49,7 +53,7 @@ export const updateSearchCount = async (query: string, movie: Movie) => {
                 poster_url: movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : 'https://placehold.Co/600x400/1alala/ffffff.png'
             })
         }
-        console.log("successfully updated")
+        // console.log("successfully updated")
     } catch (err) {
         console.log(err);
         throw new Error('An error occured ' + err);
@@ -68,14 +72,27 @@ export const getTrendingMovies = async (): Promise<TrendingMovie[] | undefined> 
         ])
         return result.documents as unknown as TrendingMovie[]
     } catch (error) {
-
         console.log(error);
         return undefined;
 
     }
 }
 
-// save movies 
+
+export const checkExisting = async (movie_id: string, user_id: string): Promise<boolean> => {
+
+    const existing = await database.listDocuments(
+        DATABASE_ID,
+        SAVED_ID,
+        [
+            Query.equal("movie_id", parseInt(movie_id)),
+            Query.equal("user_id", user_id),
+        ]
+    );
+
+    return existing.documents.length > 0;
+}
+
 
 export const saveMovie = async (
     movie_id: string,
@@ -84,44 +101,53 @@ export const saveMovie = async (
     poster_url: string | null | undefined
 ) => {
     try {
-        // try deleting first
-        await database.deleteDocument(
+        // Step 1: Check if this user already saved this movie
+        const existing = await database.listDocuments(
             DATABASE_ID,
-            SAVED_ID.toString(),
-            movie_id
+            SAVED_ID,
+            [
+                Query.equal("movie_id", parseInt(movie_id)),
+                Query.equal("user_id", user_id),
+            ]
         );
-        console.log('Deleted');
-    } catch (error: any) {
-        if (error.code === 404) {
-            try {
-                await database.createDocument(
-                    DATABASE_ID,
-                    SAVED_ID.toString(),
-                    movie_id,
-                    {
-                        movie_id: parseInt(movie_id),
-                        user_id: parseInt(user_id),
-                        title: title,
-                        poster_url: poster_url
-                            ? `https://image.tmdb.org/t/p/w500${poster_url}`
-                            : 'https://placehold.co/600x400/1alala/ffffff.png',
-                    }
-                );
-                console.log('Saved');
-            } catch (createErr) {
-                console.error('Create Error:', createErr);
-            }
+
+
+        if (existing.documents.length > 0) {
+            // Step 2: Delete the existing document (toggle off)
+            await database.deleteDocument(
+                DATABASE_ID,
+                SAVED_ID,
+                existing.documents[0].$id
+            );
+            // console.log("Deleted");
         } else {
-            console.error('Get Error:', error);
+            // Step 3: Save the movie (toggle on)
+            await database.createDocument(
+                DATABASE_ID,
+                SAVED_ID,
+
+                ID.unique(),
+                {
+                    movie_id: parseInt(movie_id),
+                    user_id,
+                    title,
+                    poster_url: poster_url
+                        ? `https://image.tmdb.org/t/p/w500${poster_url}`
+                        : "https://placehold.co/600x400/1alala/ffffff.png",
+                }
+            );
+
+            // console.log("Saved");
         }
+    } catch (error: any) {
+        console.error("Error in saveMovie:", error.message || error);
     }
 };
 
 
+// get saved movies
 
-export const getSavedMovies = async (userId?: string | undefined): Promise<savedMovie[] | undefined> => {
-
-
+export const getSavedMovies = async (userId: string): Promise<savedMovie[] | undefined> => {
 
     try {
 
@@ -129,7 +155,7 @@ export const getSavedMovies = async (userId?: string | undefined): Promise<saved
             DATABASE_ID,
             SAVED_ID.toString(),
             [
-                Query.equal('user_id', parseInt(userId!))
+                Query.equal('user_id', userId || '')
             ]
         )
         return result.documents as unknown as savedMovie[];
