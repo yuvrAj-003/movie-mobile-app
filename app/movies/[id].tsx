@@ -155,10 +155,6 @@ const MovieDetails = () => {
                                         tintColor={isSaved ? '#D6C6FF' : 'white'}
                                     />
 
-                                    {/* save count  */}
-
-                                    {/* <Text className={`${isSaved ? 'text-light-100' : 'text-white'}`}
-                                    >{smovie?.save_count} </Text> */}
                                 </TouchableOpacity>
                             </View>
 

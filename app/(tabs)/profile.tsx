@@ -17,8 +17,6 @@ const Profile = () => {
 
     const { SignOut } = useAuth(account);
 
-    // const [confirmDelete, setConfirmDelete] = useState(false)
-
     const [confirmSignOut, setConfirmSignOut] = useState(false)
 
 
@@ -104,38 +102,6 @@ const Profile = () => {
                             setConfirmSignOut(false)
                         }}
                     />
-
-
-
-                    {/* delete account  */}
-
-                    {/* <TouchableOpacity
-                        className='bg-red-400 rounded-full px-3 py-4 w-4/6 mt-5 mb-5 flex justify-center items-center'
-                        onPress={() => setConfirmDelete(true)}
-
-                    >
-                        <Text className='text-primary font-bold'>Delete Account</Text>
-                    </TouchableOpacity> */}
-
-
-
-                    {/* delete account dialog box  */}
-
-                    {/* <CustomDialogBox
-                        title="Delete Account"
-                        message="All your saved content will be lost !"
-                        ConfirmColor="bg-red-400"
-                        visible={confirmDelete}
-                        onClose={() => setConfirmDelete(false)}
-                        onConfirm={() => {
-                            setConfirmDelete(false)
-                            DeleteAccount();
-                            router.push("/")
-                        }}
-                        /> 
-                    */}
-
-
 
                 </View>
             }
