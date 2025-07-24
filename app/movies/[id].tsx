@@ -32,7 +32,7 @@ const MovieInfo = ({ label, value }: MovieInfoProps) => (
 )
 const MovieDetails = () => {
 
-    const [isSaved, setIsSaved] = useState<boolean>(true);
+    const [isSaved, setIsSaved] = useState<boolean>(false);
 
 
 
@@ -109,7 +109,7 @@ const MovieDetails = () => {
                                 <Text className='text-white font-bold text-xl w-3/4' numberOfLines={1}>{movie?.title}</Text>
 
                                 {/* saved  */}
-                                <TouchableOpacity
+                                {user && <TouchableOpacity
                                     className='p-3 bg-dark-200 rounded-xl flex-row gap-x-2 items-center justify-center'
                                     onPress={async () => {
 
@@ -155,7 +155,7 @@ const MovieDetails = () => {
                                         tintColor={isSaved ? '#D6C6FF' : 'white'}
                                     />
 
-                                </TouchableOpacity>
+                                </TouchableOpacity>}
                             </View>
 
                             <View className='flex-row items-center gap-x-1 mt-2'>
